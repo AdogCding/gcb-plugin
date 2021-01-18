@@ -1,0 +1,37 @@
+<idea-plugin>
+    <id>com.inspection.my-plugins</id>
+    <name>SonarFix</name>
+    <vendor email="likeyang@hotmail.com" url="http://www.acodingdog.com">ACodingDog</vendor>
+
+    <description>Find out all methods whose count of rows exceed 100 and add </description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <localInspection language="JAVA"
+                         displayName="Row counts exceeds the limit"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.inspection.java.rl.RowCountLimitInspection">
+        </localInspection>
+        <localInspection language="JAVA"
+                         displayName="If statement should start with a new line"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.inspection.java.rf.ReformatIfStmtInspection">
+        </localInspection>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>

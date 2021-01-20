@@ -15,7 +15,7 @@ public class AppendCommentFixer implements LocalQuickFix {
     private final String comment;
 
     public AppendCommentFixer(String comment) {
-        this.comment = String.format("//%s", comment);
+        this.comment = comment;
     }
 
     @Override

@@ -27,7 +27,7 @@ public class JavaMethodVisitor extends JavaElementVisitor {
     public JavaMethodVisitor(ProblemsHolder problemsHolder, String comment, int rowCountLimit) {
         this.problemsHolder = problemsHolder;
         this.rowCountLimit = rowCountLimit;
-        this.comment = comment;
+        this.comment = String.format("//%s", comment);
         fix = new AppendCommentFixer(this.comment);
     }
     @Override

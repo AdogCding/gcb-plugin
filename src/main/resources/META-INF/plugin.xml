@@ -21,13 +21,24 @@
                          implementationClass="com.inspection.java.rl.RowCountLimitInspection">
         </localInspection>
         <localInspection language="JAVA"
-                         displayName="If statement should start with a new line"
+                         displayName="If-statement should start with a new line"
                          groupPath="Java"
                          groupBundle="messages.InspectionsBundle"
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
                          level="WARNING"
                          implementationClass="com.inspection.java.rf.ReformatIfStmtInspection">
+        </localInspection>
+
+        <localInspection language="JAVA"
+                         displayName="replace CommonDao with DBUtils"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.inspection.java.rpl.CommonDaoUsageInspection">
+
         </localInspection>
     </extensions>
 

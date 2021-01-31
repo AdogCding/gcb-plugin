@@ -7,7 +7,14 @@ group 'com.inspection'
 version '1.0-SNAPSHOT'
 
 repositories {
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    maven {
+        url 'https://maven.aliyun.com/repository/public'
+    }  // 阿里的源
     mavenCentral()
+
 }
 
 dependencies {
@@ -21,6 +28,6 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+    """
 }
+

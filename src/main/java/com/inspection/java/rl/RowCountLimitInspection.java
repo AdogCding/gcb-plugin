@@ -10,14 +10,13 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * 检查方法的行数是否已经超过了100行
  */
 public class RowCountLimitInspection extends AbstractBaseJavaLocalInspectionTool {
     private String comment = "100Ignore";
-    private int rowCountLimit = 100;
+    private int rowCountLimit = 90;
     @Override
     public @NotNull PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
         return new JavaMethodVisitor(holder, comment, rowCountLimit);

@@ -2,12 +2,7 @@ package com.inspection.java.rpl;
 
 import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
-import com.intellij.psi.PsiLocalVariable;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiTypeElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

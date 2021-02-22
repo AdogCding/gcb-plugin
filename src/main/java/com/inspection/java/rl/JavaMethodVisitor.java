@@ -2,6 +2,7 @@ package com.inspection.java.rl;
 
 import com.inspection.java.utils.CrapTemplate;
 import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.debugger.SourcePosition;
 import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiAnonymousClass;
 import com.intellij.psi.PsiCodeBlock;
@@ -23,12 +24,12 @@ public class JavaMethodVisitor extends JavaElementVisitor {
     private int rowCountLimit;
     private String comment;
     private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("方法超过100行");
-    private final AppendCommentFixer fix;
+//    private final AppendCommentFixer fix;
     public JavaMethodVisitor(ProblemsHolder problemsHolder, String comment, int rowCountLimit) {
         this.problemsHolder = problemsHolder;
         this.rowCountLimit = rowCountLimit;
         this.comment = String.format("//%s", comment);
-        fix = new AppendCommentFixer(this.comment);
+//        fix = new AppendCommentFixer(this.comment);
     }
     @Override
     public void visitMethod(PsiMethod method) {
@@ -48,9 +49,18 @@ public class JavaMethodVisitor extends JavaElementVisitor {
         if (hasFixed(lBrace)) {
             return;
         }
-        int rowCount = codeBlock.getText().split("\n").length;
+        SourcePosition startLine = SourcePosition.createFromElement(lBrace);
+        PsiJavaToken RBrace = codeBlock.getRBrace();
+        if (RBrace == null) {
+            return;
+        }
+        SourcePosition endLine = SourcePosition.createFromElement(RBrace);
+        if (endLine == null || startLine == null) {
+            return;
+        }
+        int rowCount = endLine.getLine() - startLine.getLine();
         if (rowCount > rowCountLimit) {
-            problemsHolder.registerProblem(method, DESCRIPTION_TEMPLATE, fix);
+            problemsHolder.registerProblem(method, DESCRIPTION_TEMPLATE, new AppendCommentFixer(comment));
         }
         logger.info(String.format("%s: %s", method.getName(), rowCount));
     }

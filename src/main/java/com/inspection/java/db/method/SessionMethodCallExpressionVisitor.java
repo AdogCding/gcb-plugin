@@ -15,10 +15,6 @@ import java.util.List;
 public class SessionMethodCallExpressionVisitor extends JavaElementVisitor {
     private static final Logger logger = LoggerFactory.getLogger(SessionRelatedMethodVisitor.class);
     private List<PsiOpenSessionOperationBean> openSessionBeanList;
-    /**
-     *
-     * @param expression 方法体中的方法调用
-     */
     @Override
     public void visitMethodCallExpression(PsiMethodCallExpression expression) {
         if (SessionMethodUtils.isOpenSessionMethodCall(expression)) {

@@ -3,12 +3,11 @@ package com.inspection.java.db.bean;
 import com.intellij.psi.PsiElement;
 
 /**
- * xxx.openSession()
+ * 关闭操作的抽象对象
  */
-public class PsiOpenSessionOperationBean {
-    // xxx
+public class PsiCloseSessionOperationBean {
+
     private PsiElement caller;
-    // openSession()
     private PsiElement callee;
 
     public PsiElement getCaller() {

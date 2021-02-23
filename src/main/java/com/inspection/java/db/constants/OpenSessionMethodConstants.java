@@ -1,4 +1,4 @@
-package com.inspection.java.db.method;
+package com.inspection.java.db.constants;
 
 import java.util.HashSet;
 import java.util.Set;

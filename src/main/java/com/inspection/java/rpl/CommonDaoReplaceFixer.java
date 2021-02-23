@@ -54,7 +54,7 @@ public class CommonDaoReplaceFixer implements LocalQuickFix {
         if (methodId == null) {
             return;
         }
-        PsiIdentifier subMethodId = factory.createIdentifier(MethodMapper.get(cdMethodName));
+        PsiIdentifier subMethodId = factory.createIdentifier(MethodMap.get(cdMethodName));
         methodId.replace(subMethodId);
         // 替换调用者
         // 新的调用者

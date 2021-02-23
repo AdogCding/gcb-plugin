@@ -3,7 +3,7 @@ package com.inspection.java.rpl;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MethodMapper {
+public class MethodMap {
     public static Map<String, String> methodMap = new HashMap<>();
     static {
         methodMap.put(Constants.CD_QUERY_FOR_LIST, Constants.DB_QUERY_FOR_LIST);

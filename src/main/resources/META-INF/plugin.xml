@@ -39,6 +39,16 @@
                          level="WARNING"
                          implementationClass="com.inspection.java.rpl.CommonDaoUsageInspection">
 
+        </localInspection >
+        <localInspection language="JAVA"
+                         displayName="properly close database session"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.inspection.java.db.DBSessionHolderInspection">
+
         </localInspection>
     </extensions>
 

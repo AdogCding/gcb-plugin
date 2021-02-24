@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 判断是否存在A.open()后没有A.close()，假设open(), close()是操作的同一个session
- * 默认A只会持有一个JarfSession对象
- */
+
 public class CheckSessionMethodCallExpressionVisitor extends JavaElementVisitor {
     private static final Logger logger = LoggerFactory.getLogger(SessionRelatedMethodVisitor.class);
     private final List<PsiOpenSessionOperationBean> openSessionBeanList = new ArrayList<>();

@@ -13,6 +13,8 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 
+import java.util.Collection;
+
 public class SessionMethodUtils {
 
     public static boolean isSymmetric(PsiOpenSessionOperationBean open, PsiCloseSessionOperationBean close) {
@@ -20,11 +22,7 @@ public class SessionMethodUtils {
         PsiElement closeCaller = close.getCaller();
         return openCaller.equals(closeCaller);
     }
-    /**
-     * xxx.method是开操作, xxx要记录下来，
-     * @param mcExpr 方法调用表达式
-     * @return
-     */
+
     public static PsiOpenSessionOperationBean getOpenSessionOperationBean(PsiMethodCallExpression mcExpr) {
         PsiReferenceExpression refExpr = mcExpr.getMethodExpression();
         PsiOpenSessionOperationBean opBean = new PsiOpenSessionOperationBean();
@@ -32,11 +30,7 @@ public class SessionMethodUtils {
         if (callerRefExpr == null) {
             return null;
         }
-        PsiIdentifier callerId = PsiTreeUtil.getChildOfType(callerRefExpr, PsiIdentifier.class);
-        if (callerId == null) {
-            return null;
-        }
-        PsiReference callerRef = callerId.getReference();
+        PsiReference callerRef = callerRefExpr.getReference();
         if (callerRef == null) {
             return null;
         }
@@ -60,11 +54,7 @@ public class SessionMethodUtils {
         if (callerRefExpr == null) {
             return null;
         }
-        PsiIdentifier callerId = PsiTreeUtil.getChildOfType(callerRefExpr, PsiIdentifier.class);
-        if (callerId == null) {
-            return null;
-        }
-        PsiReference callerRef = callerId.getReference();
+        PsiReference callerRef = callerRefExpr.getReference();
         if (callerRef == null) {
             return null;
         }
@@ -76,23 +66,9 @@ public class SessionMethodUtils {
         return closeSessionOperationBean;
     }
 
-    /**
-     * 查看xxx.xxx.method()，查看method()中是否有JrafSessiionFactory.openSession()
-     * 如果有，认为是开启操作
-     * @param mcExpression
-     * @return
-     */
-    public static boolean isOpenSessionMethodCall(PsiMethodCallExpression mcExpression) {
-        PsiReferenceExpression refExpr = mcExpression.getMethodExpression();
-        PsiReference ref = refExpr.getReference();
-        if (ref == null) {
-            return false;
-        }
-        PsiElement el = ref.resolve();
-        if (!(el instanceof PsiMethod)) {
-            return false;
-        }
-        PsiMethod method = (PsiMethod) el;
+
+
+    public static boolean isOpenSessionMethod(PsiMethod method) {
         PsiClass clazz = method.getContainingClass();
         if (clazz == null) {
             return false;
@@ -111,23 +87,7 @@ public class SessionMethodUtils {
         return identifier.getText().equals(OpenSessionMethodConstants.METHOD_NAME);
     }
 
-    /**
-     * xxx.xxxx.method()表达式，查看method()中是否有JarfSession.close()，
-     * 如果有，认为是一个关闭操作
-     * @param mcExpr
-     * @return
-     */
-    public static boolean isCloseSessionMethodCall(PsiMethodCallExpression mcExpr) {
-        PsiReferenceExpression refExpr = mcExpr.getMethodExpression();
-        PsiReference ref = refExpr.getReference();
-        if (ref == null) {
-            return false;
-        }
-        PsiElement el = ref.resolve();
-        if (!(el instanceof PsiMethod)) {
-            return false;
-        }
-        PsiMethod method = (PsiMethod) el;
+    public static boolean isCloseSessionMethod(PsiMethod method) {
         PsiClass clazz = method.getContainingClass();
         if (clazz == null) {
             return false;
@@ -144,5 +104,73 @@ public class SessionMethodUtils {
             return false;
         }
         return identifier.getText().equals(CloseSessionMethodConstants.METHOD_NAME);
+    }
+
+    public static boolean containsOpenSessionMethod(PsiMethod method) {
+        Collection<PsiMethodCallExpression> methodCallExpressionCollection = PsiTreeUtil
+                .findChildrenOfType(method, PsiMethodCallExpression.class);
+        for(PsiMethodCallExpression mcExpr: methodCallExpressionCollection) {
+            PsiReference mcRef = mcExpr.getMethodExpression().getReference();
+            if (mcRef == null) {
+                continue;
+            }
+            PsiElement mcResolved = mcRef.resolve();
+            if (!(mcResolved instanceof PsiMethod)) {
+                continue;
+            }
+            PsiMethod resolvedMethod = (PsiMethod) mcResolved;
+            if (isOpenSessionMethod(resolvedMethod)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean containsCloseSessionMethod(PsiMethod method) {
+        Collection<PsiMethodCallExpression> methodCallExpressionCollection = PsiTreeUtil
+                .findChildrenOfType(method, PsiMethodCallExpression.class);
+        for(PsiMethodCallExpression mcExpr: methodCallExpressionCollection) {
+            PsiReference mcRef = mcExpr.getMethodExpression().getReference();
+            if (mcRef == null) {
+                continue;
+            }
+            PsiElement mcResolved = mcRef.resolve();
+            if (!(mcResolved instanceof PsiMethod)) {
+                continue;
+            }
+            PsiMethod resolvedMethod = (PsiMethod) mcResolved;
+            if (isCloseSessionMethod(resolvedMethod)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isOpenSessionMethodCall(PsiMethodCallExpression mcExpression) {
+        PsiReferenceExpression refExpr = mcExpression.getMethodExpression();
+        PsiReference ref = refExpr.getReference();
+        if (ref == null) {
+            return false;
+        }
+        PsiElement el = ref.resolve();
+        if (!(el instanceof PsiMethod)) {
+            return false;
+        }
+        PsiMethod method = (PsiMethod) el;
+        return containsOpenSessionMethod(method);
+    }
+
+
+    public static boolean isCloseSessionMethodCall(PsiMethodCallExpression mcExpr) {
+        PsiReferenceExpression mcRefExpr = mcExpr.getMethodExpression();
+        PsiReference mcRef = mcRefExpr.getReference();
+        if (mcRef == null) {
+            return false;
+        }
+        PsiElement elRef = mcRef.resolve();
+        if (!(elRef instanceof PsiMethod)) {
+            return false;
+        }
+        PsiMethod method = (PsiMethod) elRef;
+        return containsCloseSessionMethod(method);
     }
 }

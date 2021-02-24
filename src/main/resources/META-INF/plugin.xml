@@ -41,7 +41,7 @@
 
         </localInspection >
         <localInspection language="JAVA"
-                         displayName="properly close database session"
+                         displayName="mismatch operation database session"
                          groupPath="Java"
                          groupBundle="messages.InspectionsBundle"
                          groupKey="group.names.probable.bugs"

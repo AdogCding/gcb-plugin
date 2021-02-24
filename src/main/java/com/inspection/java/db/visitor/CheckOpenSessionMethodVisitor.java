@@ -1,4 +1,4 @@
-package com.inspection.java.db.method;
+package com.inspection.java.db.visitor;
 
 import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiMethod;

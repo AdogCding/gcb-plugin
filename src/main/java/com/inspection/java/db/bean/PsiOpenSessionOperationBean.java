@@ -8,8 +8,6 @@ import com.intellij.psi.PsiElement;
 public class PsiOpenSessionOperationBean {
     // xxx
     private PsiElement caller;
-    // openSession()
-    private PsiElement callee;
 
     public PsiElement getCaller() {
         return caller;
@@ -17,13 +15,5 @@ public class PsiOpenSessionOperationBean {
 
     public void setCaller(PsiElement caller) {
         this.caller = caller;
-    }
-
-    public PsiElement getCallee() {
-        return callee;
-    }
-
-    public void setCallee(PsiElement callee) {
-        this.callee = callee;
     }
 }

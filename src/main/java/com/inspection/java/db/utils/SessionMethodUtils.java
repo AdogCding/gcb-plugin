@@ -1,5 +1,6 @@
 package com.inspection.java.db.utils;
 
+import com.inspection.java.db.bean.PsiCloseSessionOperationBean;
 import com.inspection.java.db.bean.PsiOpenSessionOperationBean;
 import com.inspection.java.db.constants.CloseSessionMethodConstants;
 import com.inspection.java.db.constants.OpenSessionMethodConstants;
@@ -13,23 +14,66 @@ import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.util.PsiTreeUtil;
 
 public class SessionMethodUtils {
+
+    public static boolean isSymmetric(PsiOpenSessionOperationBean open, PsiCloseSessionOperationBean close) {
+        PsiElement openCaller = open.getCaller();
+        PsiElement closeCaller = close.getCaller();
+        return openCaller.equals(closeCaller);
+    }
     /**
      * xxx.method是开操作, xxx要记录下来，
-     * @param mcExpr
+     * @param mcExpr 方法调用表达式
      * @return
      */
     public static PsiOpenSessionOperationBean getOpenSessionOperationBean(PsiMethodCallExpression mcExpr) {
         PsiReferenceExpression refExpr = mcExpr.getMethodExpression();
-        PsiIdentifier id = PsiTreeUtil.getChildOfType(refExpr, PsiIdentifier.class);
-        if (id == null) {
+        PsiOpenSessionOperationBean opBean = new PsiOpenSessionOperationBean();
+        PsiReferenceExpression callerRefExpr = PsiTreeUtil.getChildOfType(refExpr, PsiReferenceExpression.class);
+        if (callerRefExpr == null) {
             return null;
         }
-        PsiReference reference = id.getReference();
-        if (reference == null) {
+        PsiIdentifier callerId = PsiTreeUtil.getChildOfType(callerRefExpr, PsiIdentifier.class);
+        if (callerId == null) {
             return null;
         }
-        PsiElement methodElement = reference.resolve();
-        return null;
+        PsiReference callerRef = callerId.getReference();
+        if (callerRef == null) {
+            return null;
+        }
+        PsiElement callerEl = callerRef.resolve();
+        if (callerEl == null) {
+            return null;
+        }
+        opBean.setCaller(callerEl);
+        return opBean;
+    }
+
+    /**
+     *
+     * @param methodCallExpression
+     * @return
+     */
+    public static PsiCloseSessionOperationBean getCloseSessionOperationBean(PsiMethodCallExpression methodCallExpression) {
+        PsiReferenceExpression refExpr = methodCallExpression.getMethodExpression();
+        PsiCloseSessionOperationBean closeSessionOperationBean = new PsiCloseSessionOperationBean();
+        PsiReferenceExpression callerRefExpr = PsiTreeUtil.getChildOfType(refExpr, PsiReferenceExpression.class);
+        if (callerRefExpr == null) {
+            return null;
+        }
+        PsiIdentifier callerId = PsiTreeUtil.getChildOfType(callerRefExpr, PsiIdentifier.class);
+        if (callerId == null) {
+            return null;
+        }
+        PsiReference callerRef = callerId.getReference();
+        if (callerRef == null) {
+            return null;
+        }
+        PsiElement callerEl = callerRef.resolve();
+        if (callerEl == null) {
+            return null;
+        }
+        closeSessionOperationBean.setCaller(callerEl);
+        return closeSessionOperationBean;
     }
 
     /**

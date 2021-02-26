@@ -30,6 +30,6 @@ public class SessionRelatedMethodVisitor extends JavaElementVisitor {
             mce.accept(checker);
         }
         List<PsiOpenSessionOperationBean> opList = checker.getOpenSessionBeanList();
-        opList.forEach((el)->problemsHolder.registerProblem(el.getCaller(), DESCRIPTION_TEMPLATE, new IdleLocalFix()));
+        opList.forEach((el)->problemsHolder.registerProblem(el.getMethodCallExpression(), DESCRIPTION_TEMPLATE, new IdleLocalFix()));
     }
 }

@@ -11,14 +11,14 @@ public class IdleLocalFix implements LocalQuickFix {
     @NotNull
     @Override
     public String getName() {
-        return "暂时无fix";
+        return "foo fix";
     }
 
     @Nls(capitalization = Nls.Capitalization.Sentence)
     @NotNull
     @Override
     public String getFamilyName() {
-        return "暂时无fix";
+        return "foo fix";
     }
 
     @Override

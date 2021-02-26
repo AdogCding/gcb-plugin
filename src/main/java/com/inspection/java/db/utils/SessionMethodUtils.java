@@ -39,6 +39,7 @@ public class SessionMethodUtils {
             return null;
         }
         opBean.setCaller(callerEl);
+        opBean.setMethodCallExpression(mcExpr);
         return opBean;
     }
 

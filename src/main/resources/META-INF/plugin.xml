@@ -46,7 +46,7 @@
                          groupBundle="messages.InspectionsBundle"
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
-                         level="WARNING"
+                         level="ERROR"
                          implementationClass="com.inspection.java.db.DBSessionHolderInspection">
 
         </localInspection>

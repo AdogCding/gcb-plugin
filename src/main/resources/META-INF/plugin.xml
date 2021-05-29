@@ -31,7 +31,7 @@
         </localInspection>
 
         <localInspection language="JAVA"
-                         displayName="replace CommonDao with DBUtils"
+                         displayName="Use DBUtils instead of CommDao"
                          groupPath="Java"
                          groupBundle="messages.InspectionsBundle"
                          groupKey="group.names.probable.bugs"
@@ -41,13 +41,23 @@
 
         </localInspection >
         <localInspection language="JAVA"
-                         displayName="mismatch operation database session"
+                         displayName="Mismatch operation database session"
                          groupPath="Java"
                          groupBundle="messages.InspectionsBundle"
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
-                         level="ERROR"
+                         level="WARNING"
                          implementationClass="com.inspection.java.db.DBSessionHolderInspection">
+
+        </localInspection>
+        <localInspection language="JAVA"
+                         displayName="Use WorkbookFactory rather than creating workbook directly"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+        >
 
         </localInspection>
     </extensions>

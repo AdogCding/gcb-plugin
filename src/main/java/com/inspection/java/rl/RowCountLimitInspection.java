@@ -12,7 +12,7 @@ import javax.swing.event.DocumentEvent;
 import java.awt.*;
 
 /**
- * 检查方法的行数是否已经超过了100行
+ * 100 lines checker
  */
 public class RowCountLimitInspection extends AbstractBaseJavaLocalInspectionTool {
     private String comment = "100Ignore";

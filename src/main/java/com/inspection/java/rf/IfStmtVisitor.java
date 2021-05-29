@@ -8,7 +8,7 @@ import com.intellij.psi.PsiWhiteSpace;
 
 public class IfStmtVisitor extends JavaElementVisitor {
     private final ProblemsHolder problemsHolder;
-    private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("条件语句应该另起一行");
+    private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("if-statement should start with a new line");
 
     public IfStmtVisitor(ProblemsHolder problemsHolder) {
         this.problemsHolder = problemsHolder;

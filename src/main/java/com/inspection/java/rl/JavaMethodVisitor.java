@@ -16,14 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 判断方法的行数是否超过限制
+ * check the number of rows
  */
 public class JavaMethodVisitor extends JavaElementVisitor {
     private static final Logger logger = LoggerFactory.getLogger(JavaMethodVisitor.class);
     private final ProblemsHolder problemsHolder;
     private int rowCountLimit;
     private String comment;
-    private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("方法超过100行");
+    private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("this method or class has more than 100 lines");
 //    private final AppendCommentFixer fix;
     public JavaMethodVisitor(ProblemsHolder problemsHolder, String comment, int rowCountLimit) {
         this.problemsHolder = problemsHolder;

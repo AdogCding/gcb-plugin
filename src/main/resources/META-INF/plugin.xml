@@ -57,8 +57,16 @@
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="com.inspection.java.excel.InProperWayCrtWBInspection"
-        >
+                         implementationClass="com.inspection.java.xcl.InProperWayCrtWBInspection">
+
+        </localInspection>
+        <localInspection language="JAVA" displayName="Use JrafJob instead of Quartz Job"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionsBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.inspection.java.jb.JobImplementationInspection">
 
         </localInspection>
     </extensions>

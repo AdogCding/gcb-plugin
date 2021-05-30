@@ -1,8 +1,7 @@
-package com.inspection.java.excel;
+package com.inspection.java.xcl;
 
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.findUsages.FindUsagesProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
@@ -16,9 +15,6 @@ import com.intellij.psi.PsiNewExpression;
 import com.intellij.psi.PsiReferenceExpression;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtil;
-import com.intellij.usageView.JavaUsageViewDescriptionProvider;
-import com.intellij.usages.impl.rules.JavaUsageTypeProvider;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
@@ -77,7 +73,6 @@ public class ImproperWorkBookCrtFixer implements LocalQuickFix {
         }
         fooBimisFileRef.replace(bimisRefCy);
         psiElement.replace(properWayCrtWorkbookCallPlaceholder);
-        JavaUsageTypeProvider
     }
 
     private PsiReferenceExpression findBimisFileRef(PsiNewExpression psiNewExpression) {

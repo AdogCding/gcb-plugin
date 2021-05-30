@@ -9,6 +9,6 @@ public class InProperWayCrtWBInspection extends AbstractBaseJavaLocalInspectionT
     @NotNull
     @Override
     public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly) {
-        return null;
+        return new WorkbookCrtStmtVisitor(holder);
     }
 }

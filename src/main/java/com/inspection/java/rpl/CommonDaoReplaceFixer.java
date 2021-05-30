@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 public class CommonDaoReplaceFixer implements LocalQuickFix {
-    private String cdMethodName;
+    private final String cdMethodName;
 
     public CommonDaoReplaceFixer(String cdMethodName) {
         this.cdMethodName = cdMethodName;

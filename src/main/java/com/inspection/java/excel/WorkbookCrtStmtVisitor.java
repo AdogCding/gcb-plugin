@@ -1,45 +1,43 @@
 package com.inspection.java.excel;
 
-import com.inspection.java.exception.TooHardForMyBrainException;
+import com.inspection.java.utils.CrapTemplate;
+import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 public class WorkbookCrtStmtVisitor extends JavaElementVisitor {
-    private static final String QUALIFIED_NAME = "com.sunline.Workbook";
-    private static final String NON_QUALIFIED_NAME = "Workbook";
+    private final ProblemsHolder problemsHolder;
+    private static final String HSSF_WORKBOOK_QNAME = "org.apache.poi.hssf.usermodel.HSSFWorkbook";
+    private static final String XSSF_WORKBOOK_QNAME = "org.apache.poi.xssf.usermodel.XSSFWorkbook";
+    private static final String IGNORED_FILE = "com.sunline.gfnfrs.core.excel";
+    private static final Logger logger = LoggerFactory.getLogger(WorkbookCrtStmtVisitor.class);
+    private final String DESCRIPTION_TEMPLATE = CrapTemplate.getCrapStmt("It's not a good way to create workbook");
+    public WorkbookCrtStmtVisitor(ProblemsHolder problemsHolder) {
+        this.problemsHolder = problemsHolder;
+    }
     @Override
     public void visitNewExpression(PsiNewExpression psiNewExpression) {
+        PsiClass psiClass = PsiTreeUtil.getParentOfType(psiNewExpression, PsiClass.class);
+        // 不检查这个class里的
+        if (psiClass != null && psiClass.getQualifiedName()!= null && psiClass.getQualifiedName().equals(IGNORED_FILE)) {
+            return;
+        }
         PsiJavaCodeReferenceElement reference = psiNewExpression.getClassReference();
         if (reference == null) {
             return ;
         }
-        if (reference.isQualified() && reference.getQualifiedName() != null && reference.getQualifiedName().equals(QUALIFIED_NAME)) {
+        PsiElement workbookClassPsiEl = reference.resolve();
+        if (!(workbookClassPsiEl instanceof PsiClass)) {
             return;
         }
-        if (!reference.isQualified() && reference.getReferenceName() != null && reference.getQualifiedName().equals(NON_QUALIFIED_NAME)) {
-            return;
-        }
-        // make sure its our target class
-        PsiExpressionList workbookExpressionList = PsiTreeUtil.getChildOfType(psiNewExpression, PsiExpressionList.class);
-        if (workbookExpressionList == null) {
-            return;
-        }
-        // no help to handle this situation
-        if (workbookExpressionList.getExpressionCount() != 1) {
-            return;
-        }
-        PsiExpression expression = workbookExpressionList.getExpressions()[0];
-        // my little brain can only handle this
-        if (!(expression instanceof PsiReferenceExpression)) {
-            return;
-        }
-        PsiReferenceExpression referenceExpression = (PsiReferenceExpression) expression;
-        PsiElement resolvedRef = referenceExpression.resolve();
-        if (!(resolvedRef instanceof PsiIdentifier)) {
-            return ;
+        PsiClass wbPsiClass = (PsiClass) workbookClassPsiEl;
+        String qName = wbPsiClass.getQualifiedName();
+        if (qName != null && (qName.equals(XSSF_WORKBOOK_QNAME) || qName.equals(HSSF_WORKBOOK_QNAME))) {
+            problemsHolder.registerProblem(psiNewExpression, DESCRIPTION_TEMPLATE, new ImproperWorkBookCrtFixer());
         }
     }
 }

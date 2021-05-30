@@ -57,6 +57,7 @@
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
                          level="WARNING"
+                         implementationClass="com.inspection.java.excel.InProperWayCrtWBInspection"
         >
 
         </localInspection>

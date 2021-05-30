@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 public class CommonDaoChecker extends JavaElementVisitor {
     private boolean result = false;
     private final Logger logger = LoggerFactory.getLogger(CommonDaoChecker.class);
-    private final String COMMON_DAO_NAME = "CommonDao";
 
     @Override
     public void visitMethod(PsiMethod method) {
@@ -19,6 +18,7 @@ public class CommonDaoChecker extends JavaElementVisitor {
             return;
         }
         String qName = psiClass.getQualifiedName();
+        String COMMON_DAO_NAME = "CommonDao";
         if (qName != null &&
                 qName.contains(COMMON_DAO_NAME)) {
             setResult(true);

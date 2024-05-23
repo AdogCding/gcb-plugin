@@ -1,77 +1,30 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.inspection.my-plugins</id>
-    <name>SonarFix</name>
-    <vendor email="likeyang@hotmail.com" url="http://www.acodingdog.com">ACodingDog</vendor>
+    <id>org.gcb.plugin</id>
+    <name>A Simple Tool</name>
+    <vendor>AdogCoding</vendor>
 
-    <description>Find out all methods whose count of rows exceed 100 and add </description>
-
-    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+
+    <resource-bundle>messages.InspectionBundle</resource-bundle>
+
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <toolWindow factoryClass="org.gcb.plugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <localInspection language="JAVA"
-                         displayName="Row counts exceeds the limit"
                          groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
+                         groupBundle="messages.InspectionBundle"
                          groupKey="group.names.probable.bugs"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="com.inspection.java.rl.RowCountLimitInspection">
-        </localInspection>
-        <localInspection language="JAVA"
-                         displayName="If-statement should start with a new line"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.inspection.java.rf.ReformatIfStmtInspection">
-        </localInspection>
-
-        <localInspection language="JAVA"
-                         displayName="Use DBUtils instead of CommDao"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.inspection.java.rpl.CommonDaoUsageInspection">
-
-        </localInspection >
-        <localInspection language="JAVA"
-                         displayName="Mismatch operation database session"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.inspection.java.db.DBSessionHolderInspection">
-
-        </localInspection>
-        <localInspection language="JAVA"
-                         displayName="Use WorkbookFactory rather than creating workbook directly"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.inspection.java.xcl.InProperWayCrtWBInspection">
-
-        </localInspection>
-        <localInspection language="JAVA" displayName="Use JrafJob instead of Quartz Job"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.inspection.java.jb.JobImplementationInspection">
-
+                         displayName="Count"
+                         implementationClass="org.gcb.plugin.inspection.row.RowCountInspection"
+        >
         </localInspection>
     </extensions>
 
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
+    <applicationListeners>
+        <listener class="org.gcb.plugin.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+    </applicationListeners>
 </idea-plugin>

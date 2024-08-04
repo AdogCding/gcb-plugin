@@ -1,4 +1,4 @@
-# my-plugin
+# gcb-plugin
 IDEA的插件使用Gradle作为构建工具, 要先从官网上下载Gradle,或使用IDEA自动下载的Gradle.
 由于网络原因，最好移步[官网](https://gradle.org/install/).
 Intellij提供了相对详细的[官方文档](https://plugins.jetbrains.com/docs/intellij/welcome.html), 但是在实际开发中还是会遇到很多无法解释的困难,

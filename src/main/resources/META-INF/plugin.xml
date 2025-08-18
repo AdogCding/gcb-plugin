@@ -19,12 +19,29 @@
                          level="WARNING"
                          displayName="Count"
                          implementationClass="org.gcb.plugin.inspection.row.RowCountInspection"
-        >
-        </localInspection>
+        />
+        <localInspection language="JAVA"
+                         groupPath="Java"
+                         groupBundle="messages.InspectionBundle"
+                         groupKey="group.names.probable.bugs"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         displayName="Sensitive"
+                         implementationClass="org.gcb.plugin.inspection.row.SensitiveLogInspection"
+        />
     </extensions>
 
     <applicationListeners>
         <listener class="org.gcb.plugin.listeners.MyApplicationActivationListener"
                   topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+
+    <actions>
+        <action
+                text="Popup Menu"
+                description="Popup menu"
+                class="org.gcb.plugin.action.PopupDialogAction">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>
